@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Compiling...'
-				sh 'mvn clean package'
+				bat 'mvn clean package'
             }
 			post {
 				success {
