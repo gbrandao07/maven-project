@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     parameters {
+         string(name: 'tomcat_dev', defaultValue: '18.223.132.196', description: 'Staging Server')
          string(name: 'tomcat_prod', defaultValue: '3.16.157.123', description: 'Production Server')
     }
 
@@ -26,12 +27,16 @@ pipeline {
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
+						bat "touch README.txt"
+						bat "cmd.exe /c echo y | pscp.exe -pw myP4ss README.txt ec2-user@${params.tomcat_dev}:/tmp/"
                         bat " pscp -i /c/Users/gustavo/Desktop/tomcat-demo.pem /c/Program Files (x86)/Jenkins/workspace/FullyAutomated/webapp/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat/webapps"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
+					    bat "touch README2.txt"
+						bat "cmd.exe /c echo y | pscp.exe -pw myP4ss README2.txt ec2-user@${params.tomcat_dev}:/tmp/"
                         bat " pscp -i /c/Users/gustavo/Desktop/tomcat-demo.pem /c/Program Files (x86)/Jenkins/workspace/FullyAutomated/webapp/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat/webapps"
                     }
                 }
