@@ -36,7 +36,7 @@ pipeline {
                 stage ("Deploy to Production"){
                     steps {
 					    bat "type NUL > t2.txt"
-						bat "cmd.exe /c echo y | pscp.exe -pw myP4ss t2.txt ec2-user@${params.tomcat_dev}:/tmp/"
+						bat "cmd.exe /c echo y | pscp.exe -pw myP4ss t2.txt ec2-user@${params.tomcat_prod}:/tmp/"
                         bat " pscp -i /c/Users/gustavo/Desktop/tomcat-demo.pem /c/Program Files (x86)/Jenkins/workspace/FullyAutomated/webapp/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat/webapps"
                     }
                 }
