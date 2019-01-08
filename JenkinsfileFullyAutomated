@@ -27,16 +27,16 @@ pipeline {
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-						bat "touch README.txt"
-						bat "cmd.exe /c echo y | pscp.exe -pw myP4ss README.txt ec2-user@${params.tomcat_dev}:/tmp/"
+						bat "type NUL > t.txt"
+						bat "cmd.exe /c echo y | pscp.exe -pw myP4ss t.txt ec2-user@${params.tomcat_dev}:/tmp/"
                         bat " pscp -i /c/Users/gustavo/Desktop/tomcat-demo.pem /c/Program Files (x86)/Jenkins/workspace/FullyAutomated/webapp/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat/webapps"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-					    bat "touch README2.txt"
-						bat "cmd.exe /c echo y | pscp.exe -pw myP4ss README2.txt ec2-user@${params.tomcat_dev}:/tmp/"
+					    bat "type NUL > t2.txt"
+						bat "cmd.exe /c echo y | pscp.exe -pw myP4ss t2.txt ec2-user@${params.tomcat_dev}:/tmp/"
                         bat " pscp -i /c/Users/gustavo/Desktop/tomcat-demo.pem /c/Program Files (x86)/Jenkins/workspace/FullyAutomated/webapp/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat/webapps"
                     }
                 }
